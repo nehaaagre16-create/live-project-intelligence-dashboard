@@ -1,0 +1,606 @@
+/* Dashboard Layout */
+.dashboard {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 32px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-left h1 {
+  font-size: 24px;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.header-left .subtitle {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.header-center .health-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 24px;
+  border: 2px solid;
+  border-radius: var(--radius);
+  background: var(--bg-card);
+}
+
+.health-score {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.health-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+}
+
+.health-trend {
+  font-size: 18px;
+  margin-top: 4px;
+}
+
+.header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.status-indicators {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.connection-status {
+  font-size: 12px;
+}
+
+.live-indicator {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+.live-indicator.active {
+  color: var(--success);
+}
+
+.last-update {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.refresh-btn {
+  padding: 8px 16px;
+  background: var(--accent-primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.refresh-btn:hover {
+  background: var(--accent-secondary);
+  transform: translateY(-1px);
+}
+
+/* Navigation */
+.dashboard-nav {
+  display: flex;
+  gap: 4px;
+  padding: 12px 32px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.dashboard-nav button {
+  padding: 8px 20px;
+  background: transparent;
+  color: var(--text-secondary);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.dashboard-nav button:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.dashboard-nav button.active {
+  background: var(--accent-primary);
+  color: white;
+}
+
+/* Content Grid */
+.dashboard-content {
+  flex: 1;
+  padding: 24px 32px;
+  overflow-y: auto;
+}
+
+.grid-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.grid-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.grid-row.full-width {
+  grid-template-columns: 1fr;
+}
+
+/* Cards */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+}
+
+.card h2 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+
+.panel-subtitle {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+.no-data {
+  color: var(--text-muted);
+  font-style: italic;
+  text-align: center;
+  padding: 24px;
+}
+
+/* Health Card */
+.health-card {
+  position: relative;
+}
+
+.health-chart {
+  position: relative;
+  height: 200px;
+}
+
+.health-score-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.health-score-overlay .score {
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.health-score-overlay .label {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.issues-list {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.issue-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--bg-primary);
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.issue-item.critical {
+  border-left: 3px solid var(--danger);
+}
+
+.issue-item.warning {
+  border-left: 3px solid var(--warning);
+}
+
+.issue-item.info {
+  border-left: 3px solid var(--info);
+}
+
+.no-issues {
+  color: var(--success);
+  text-align: center;
+  padding: 16px;
+}
+
+/* Complexity Panel */
+.complexity-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.stat {
+  text-align: center;
+  padding: 12px;
+  background: var(--bg-primary);
+  border-radius: 8px;
+}
+
+.stat-value {
+  display: block;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--accent-primary);
+}
+
+.stat-label {
+  display: block;
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.chart-container {
+  margin-top: 16px;
+}
+
+.hotspots-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.hotspot-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: var(--bg-primary);
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.hotspot-path {
+  color: var(--text-secondary);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+}
+
+.hotspot-complexity {
+  font-weight: 600;
+  color: var(--warning);
+}
+
+/* Risk Panel */
+.risk-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.risk-item {
+  padding: 16px;
+  background: var(--bg-primary);
+  border-radius: 8px;
+}
+
+.risk-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.risk-path {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.risk-badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  color: white;
+}
+
+.risk-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.risk-metric {
+  text-align: center;
+}
+
+.risk-metric .metric-label {
+  display: block;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.risk-metric .metric-value {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.risk-bar {
+  height: 6px;
+  background: var(--bg-hover);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.risk-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+/* Bottleneck Panel */
+.bottleneck-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bottleneck-item {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding: 12px;
+  background: var(--bg-primary);
+  border-radius: 8px;
+}
+
+.dev-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dev-rank {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent-primary);
+  width: 32px;
+}
+
+.dev-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.dev-name {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.dev-email {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.dev-stats {
+  display: flex;
+  gap: 16px;
+}
+
+.dev-stat {
+  text-align: center;
+}
+
+.commit-bar {
+  height: 6px;
+  background: var(--bg-hover);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.commit-bar-fill {
+  height: 100%;
+  background: var(--accent-primary);
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+.last-commit {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Agent Panel */
+.agent-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.agent-item {
+  padding: 16px;
+  background: var(--bg-primary);
+  border-radius: 8px;
+}
+
+.agent-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.agent-status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.agent-name {
+  font-weight: 600;
+  flex: 1;
+}
+
+.agent-status {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.agent-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.agent-metric {
+  text-align: center;
+}
+
+.agent-metric .metric-value {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.agent-metric .metric-label {
+  display: block;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Activity Feed */
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.activity-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  background: var(--bg-primary);
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.activity-item:hover {
+  background: var(--bg-hover);
+}
+
+.activity-item.event-error {
+  border-left: 3px solid var(--danger);
+}
+
+.activity-item.event-warning {
+  border-left: 3px solid var(--warning);
+}
+
+.activity-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.activity-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.activity-message {
+  font-size: 13px;
+  color: var(--text-primary);
+}
+
+.activity-time {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .grid-row {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .header-right {
+    align-items: center;
+  }
+
+  .complexity-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .risk-metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .bottleneck-item {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
