@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intelligence Dashboard - Flow Diagram</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background: #020617;
+      min-height: 100vh;
+      padding: 2rem;
+      color: #e4e4e7;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    .header { margin-bottom: 2rem; }
+    .header-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem; }
+    .pulse-dot { width: 12px; height: 12px; background: #22d3ee; border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em; }
+    .subtitle { color: #94a3b8; font-size: 0.875rem; margin-left: 1.75rem; }
+    .diagram-container { background: rgba(15, 23, 42, 0.5); border-radius: 1rem; border: 1px solid #1e293b; padding: 1.5rem; overflow-x: auto; }
+    svg { width: 100%; min-width: 900px; display: block; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-top: 2rem; }
+    .card { background: rgba(15, 23, 42, 0.5); border-radius: 0.75rem; border: 1px solid #1e293b; padding: 1.25rem; }
+    .card-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; }
+    .card-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .card-dot.cyan { background: #22d3ee; }
+    .card-dot.emerald { background: #34d399; }
+    .card-dot.violet { background: #a78bfa; }
+    .card-dot.amber { background: #fbbf24; }
+    .card h3 { font-size: 0.875rem; font-weight: 600; }
+    .card ul { list-style: none; color: #94a3b8; font-size: 0.75rem; }
+    .card li { margin-bottom: 0.375rem; }
+    .footer { text-align: center; margin-top: 1.5rem; color: #475569; font-size: 0.75rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="header-row">
+        <div class="pulse-dot"></div>
+        <h1>Intelligence Dashboard - Flow Diagram</h1>
+      </div>
+      <p class="subtitle">Data flow from GitHub to UI</p>
+    </div>
+
+    <div class="diagram-container">
+      <svg viewBox="0 0 1000 700">
+        <defs>
+          <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#64748b" />
+          </marker>
+          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.5"/>
+          </pattern>
+        </defs>
+
+        <rect width="100%" height="100%" fill="url(#grid)" />
+
+        <!-- EXTERNAL: GitHub -->
+        <rect x="30" y="80" width="140" height="60" rx="6" fill="rgba(30, 41, 59, 0.5)" stroke="#94a3b8" stroke-width="1.5"/>
+        <text x="100" y="105" fill="white" font-size="11" font-weight="600" text-anchor="middle">GitHub API</text>
+        <text x="100" y="121" fill="#94a3b8" font-size="9" text-anchor="middle">Issues + PRs</text>
+
+        <!-- EXTERNAL: Paperclip Server -->
+        <rect x="30" y="280" width="140" height="60" rx="6" fill="rgba(30, 41, 59, 0.5)" stroke="#94a3b8" stroke-width="1.5"/>
+        <text x="100" y="305" fill="white" font-size="11" font-weight="600" text-anchor="middle">Paperclip Server</text>
+        <text x="100" y="321" fill="#94a3b8" font-size="9" text-anchor="middle">Host Application</text>
+
+        <!-- EXTERNAL: User Browser -->
+        <rect x="30" y="520" width="140" height="60" rx="6" fill="rgba(30, 41, 59, 0.5)" stroke="#94a3b8" stroke-width="1.5"/>
+        <text x="100" y="545" fill="white" font-size="11" font-weight="600" text-anchor="middle">User Browser</text>
+        <text x="100" y="561" fill="#94a3b8" font-size="9" text-anchor="middle">Chrome/Firefox</text>
+
+        <!-- PLUGIN WORKER -->
+        <rect x="250" y="40" width="500" height="140" rx="12" fill="rgba(120, 53, 15, 0.05)" stroke="#fbbf24" stroke-width="1" stroke-dasharray="8,4"/>
+        <text x="262" y="58" fill="#fbbf24" font-size="10" font-weight="600">Plugin Worker (Node.js)</text>
+
+        <!-- Worker Components -->
+        <rect x="270" y="80" width="120" height="50" rx="6" fill="rgba(120, 53, 15, 0.3)" stroke="#fbbf24" stroke-width="1.5"/>
+        <text x="330" y="100" fill="white" font-size="11" font-weight="600" text-anchor="middle">GitHub Fetcher</text>
+        <text x="330" y="116" fill="#94a3b8" font-size="9" text-anchor="middle">API Calls</text>
+
+        <rect x="420" y="80" width="120" height="50" rx="6" fill="rgba(120, 53, 15, 0.3)" stroke="#fbbf24" stroke-width="1.5"/>
+        <text x="480" y="100" fill="white" font-size="11" font-weight="600" text-anchor="middle">Data Processor</text>
+        <text x="480" y="116" fill="#94a3b8" font-size="9" text-anchor="middle">Filter + Format</text>
+
+        <rect x="570" y="80" width="120" height="50" rx="6" fill="rgba(120, 53, 15, 0.3)" stroke="#fbbf24" stroke-width="1.5"/>
+        <text x="630" y="100" fill="white" font-size="11" font-weight="600" text-anchor="middle">Data Handlers</text>
+        <text x="630" y="116" fill="#94a3b8" font-size="9" text-anchor="middle">Routes</text>
+
+        <!-- PLUGIN UI -->
+        <rect x="250" y="240" width="500" height="340" rx="12" fill="rgba(8, 51, 68, 0.05)" stroke="#22d3ee" stroke-width="1" stroke-dasharray="8,4"/>
+        <text x="262" y="258" fill="#22d3ee" font-size="10" font-weight="600">Plugin UI (React + TypeScript)</text>
+
+        <!-- UI Components -->
+        <rect x="270" y="280" width="200" height="110" rx="8" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+        <text x="370" y="305" fill="white" font-size="12" font-weight="600" text-anchor="middle">Header</text>
+        <text x="370" y="325" fill="#94a3b8" font-size="9" text-anchor="middle">Project Dropdown</text>
+        <text x="370" y="340" fill="#94a3b8" font-size="9" text-anchor="middle">Status Pills</text>
+        <text x="370" y="355" fill="#94a3b8" font-size="9" text-anchor="middle">Refresh Button</text>
+        <text x="370" y="375" fill="#22d3ee" font-size="8" text-anchor="middle">Critical / Warning Counts</text>
+
+        <rect x="270" y="420" width="200" height="50" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+        <text x="370" y="440" fill="white" font-size="11" font-weight="600" text-anchor="middle">Tab Navigation</text>
+        <text x="370" y="456" fill="#94a3b8" font-size="9" text-anchor="middle">Overview / Agents / Activity / GitHub</text>
+
+        <rect x="520" y="280" width="200" height="80" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
+        <text x="620" y="305" fill="white" font-size="11" font-weight="600" text-anchor="middle">Metric Cards</text>
+        <text x="620" y="325" fill="#94a3b8" font-size="9" text-anchor="middle">Agents / Issues Stats</text>
+        <text x="620" y="345" fill="#34d399" font-size="8" text-anchor="middle">Real-time counts</text>
+
+        <rect x="520" y="390" width="200" height="80" rx="6" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+        <text x="620" y="415" fill="white" font-size="11" font-weight="600" text-anchor="middle">GitHub Panels</text>
+        <text x="620" y="435" fill="#94a3b8" font-size="9" text-anchor="middle">Issues + PRs Lists</text>
+        <text x="620" y="455" fill="#a78bfa" font-size="8" text-anchor="middle">Filtered by project</text>
+
+        <rect x="520" y="500" width="200" height="50" rx="6" fill="rgba(136, 19, 55, 0.4)" stroke="#fb7185" stroke-width="1.5"/>
+        <text x="620" y="520" fill="white" font-size="11" font-weight="600" text-anchor="middle">Notifications</text>
+        <text x="620" y="536" fill="#94a3b8" font-size="9" text-anchor="middle">Alerts + Failed Tasks</text>
+
+        <!-- DATA FLOW ARROWS -->
+        <!-- GitHub → Worker -->
+        <line x1="170" y1="110" x2="268" y2="110" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+        <text x="219" y="102" fill="#94a3b8" font-size="8" text-anchor="middle">REST API</text>
+        <text x="219" y="130" fill="#fbbf24" font-size="7" text-anchor="middle">Token: ghp_***</text>
+
+        <!-- Paperclip → Worker -->
+        <line x1="170" y1="310" x2="250" y2="140" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+        <text x="200" y="240" fill="#94a3b8" font-size="8" text-anchor="middle">Plugin SDK</text>
+
+        <!-- Worker → UI -->
+        <line x1="370" y1="190" x2="370" y2="278" stroke="#22d3ee" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+        <text x="385" y="240" fill="#22d3ee" font-size="8">JSON Data</text>
+
+        <!-- UI → Browser -->
+        <line x1="250" y1="550" x2="170" y2="550" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+        <text x="210" y="542" fill="#94a3b8" font-size="8" text-anchor="middle">Render</text>
+
+        <!-- User → UI -->
+        <line x1="100" y1="520" x2="100" y2="460" stroke="#fb7185" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+        <text x="115" y="495" fill="#fb7185" font-size="8">Clicks</text>
+
+        <!-- CONFIG -->
+        <rect x="750" y="80" width="200" height="120" rx="8" fill="rgba(136, 19, 55, 0.1)" stroke="#fb7185" stroke-width="1" stroke-dasharray="4,4"/>
+        <text x="762" y="98" fill="#fb7185" font-size="10" font-weight="600">Configuration (.env)</text>
+        <text x="762" y="118" fill="#94a3b8" font-size="8">GITHUB_TOKEN=***</text>
+        <text x="762" y="132" fill="#94a3b8" font-size="8">PROJECT_1_OWNER/REPO</text>
+        <text x="762" y="146" fill="#94a3b8" font-size="8">PROJECT_2_OWNER/REPO</text>
+        <text x="762" y="160" fill="#94a3b8" font-size="8">PROJECT_3_OWNER/REPO</text>
+        <text x="762" y="180" fill="#fb7185" font-size="7">Bug Reporter / Intelligence / Paperclip</text>
+
+        <!-- Config → Worker -->
+        <line x1="750" y1="140" x2="690" y2="140" stroke="#fb7185" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+        <text x="720" y="132" fill="#fb7185" font-size="8">Load</text>
+
+        <!-- LEGEND -->
+        <text x="750" y="280" fill="white" font-size="10" font-weight="600">Legend</text>
+        <rect x="750" y="292" width="16" height="10" rx="2" fill="rgba(120, 53, 15, 0.3)" stroke="#fbbf24" stroke-width="1"/>
+        <text x="772" y="300" fill="#94a3b8" font-size="8">Worker (Backend)</text>
+        <rect x="750" y="308" width="16" height="10" rx="2" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1"/>
+        <text x="772" y="316" fill="#94a3b8" font-size="8">UI (Frontend)</text>
+        <rect x="750" y="324" width="16" height="10" rx="2" fill="rgba(30, 41, 59, 0.5)" stroke="#94a3b8" stroke-width="1"/>
+        <text x="772" y="332" fill="#94a3b8" font-size="8">External</text>
+        <rect x="750" y="340" width="16" height="10" rx="2" fill="rgba(136, 19, 55, 0.1)" stroke="#fb7185" stroke-width="1" stroke-dasharray="3,3"/>
+        <text x="772" y="348" fill="#94a3b8" font-size="8">Config</text>
+        <line x1="750" y1="360" x2="766" y2="360" stroke="#94a3b8" stroke-width="1" marker-end="url(#arrowhead)"/>
+        <text x="772" y="363" fill="#94a3b8" font-size="8">Data Flow</text>
+        <line x1="750" y1="372" x2="766" y2="372" stroke="#fb7185" stroke-width="1" marker-end="url(#arrowhead)"/>
+        <text x="772" y="375" fill="#94a3b8" font-size="8">User Action</text>
+      </svg>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot amber"></div>
+          <h3>Data Flow Steps</h3>
+        </div>
+        <ul>
+          <li>1. Worker loads config from .env</li>
+          <li>2. Worker fetches GitHub data via API</li>
+          <li>3. Worker processes and filters data</li>
+          <li>4. UI requests data from Worker</li>
+          <li>5. UI renders cards, tabs, panels</li>
+          <li>6. User interacts (clicks, selects)</li>
+          <li>7. Auto-refresh every 30 seconds</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot cyan"></div>
+          <h3>Key Components</h3>
+        </div>
+        <ul>
+          <li>GitHub Fetcher: REST API calls</li>
+          <li>Data Processor: Filter + Format</li>
+          <li>Data Handlers: API routes</li>
+          <li>Header: Project dropdown</li>
+          <li>Tabs: Navigation</li>
+          <li>GitHub Panels: Issues + PRs</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot violet"></div>
+          <h3>Multi-Project Support</h3>
+        </div>
+        <ul>
+          <li>Bug Reporter Dashboard</li>
+          <li>Intelligence Dashboard</li>
+          <li>Paperclip (core)</li>
+          <li>Per-project filtering</li>
+          <li>Repo-specific issue/PR display</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="footer">
+      Intelligence Dashboard Flow Diagram
+    </p>
+  </div>
+</body>
+</html>
