@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { DashboardServer } from './api/server.js';
 import * as path from 'path';
 

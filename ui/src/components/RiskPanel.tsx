@@ -7,71 +7,63 @@ interface RiskPanelProps {
 }
 
 export const RiskPanel: React.FC<RiskPanelProps> = ({ risks, compact }) => {
-  const getRiskColor = (score: number) => {
-    if (score >= 70) return '#ef4444';
-    if (score >= 40) return '#f59e0b';
-    return '#10b981';
+  const getRiskLevel = (score: number) => {
+    if (score >= 70) return 'high';
+    if (score >= 40) return 'medium';
+    return 'low';
   };
 
-  const getRiskLabel = (score: number) => {
-    if (score >= 70) return 'High';
-    if (score >= 40) return 'Medium';
-    return 'Low';
+  const getRiskColor = (score: number) => {
+    if (score >= 70) return 'var(--danger)';
+    if (score >= 40) return 'var(--warning)';
+    return 'var(--success)';
   };
+
+  const displayRisks = compact ? risks.slice(0, 5) : risks;
 
   return (
-    <div className={`card risk-card ${compact ? 'compact' : ''}`}>
-      <h2>Risky Systems</h2>
-      
+    <div className="card">
+      <div className="card-header">
+        <div>
+          <div className="card-title">Risk Analysis</div>
+          <div className="card-subtitle">High-risk modules</div>
+        </div>
+        {risks.length > 0 && (
+          <div className="card-badge danger">
+            {risks.filter(r => r.riskScore >= 70).length} Critical
+          </div>
+        )}
+      </div>
+
       {risks.length === 0 ? (
-        <p className="no-data">No risks detected 🎉</p>
+        <div className="no-data">No risks detected</div>
       ) : (
         <div className="risk-list">
-          {risks.map((risk, idx) => (
-            <div key={idx} className="risk-item">
-              <div className="risk-header">
-                <span className="risk-path">{risk.path}</span>
-                <span 
-                  className="risk-badge"
-                  style={{ backgroundColor: getRiskColor(risk.riskScore) }}
-                >
-                  {getRiskLabel(risk.riskScore)} ({risk.riskScore})
-                </span>
-              </div>
-              
-              {!compact && (
-                <div className="risk-metrics">
-                  <div className="risk-metric">
-                    <span className="metric-label">Error Rate</span>
-                    <span className="metric-value">{risk.errorRate.toFixed(1)}%</span>
-                  </div>
-                  <div className="risk-metric">
-                    <span className="metric-label">Avg Response</span>
-                    <span className="metric-value">{risk.avgResponseTime.toFixed(0)}ms</span>
-                  </div>
-                  <div className="risk-metric">
-                    <span className="metric-label">Failures</span>
-                    <span className="metric-value">{risk.failureCount}</span>
-                  </div>
-                  {risk.lastFailure && (
-                    <div className="risk-metric">
-                      <span className="metric-label">Last Failure</span>
-                      <span className="metric-value">
-                        {new Date(risk.lastFailure).toLocaleDateString()}
-                      </span>
-                    </div>
-                  )}
+          {displayRisks.map((risk, idx) => (
+            <div key={idx} className={`risk-item ${getRiskLevel(risk.riskScore)}`}>
+              <div className="risk-score">
+                <div className="risk-score-value" style={{ color: getRiskColor(risk.riskScore) }}>
+                  {risk.riskScore}
                 </div>
-              )}
-              
-              <div className="risk-bar">
-                <div 
-                  className="risk-bar-fill"
-                  style={{ 
-                    width: `${risk.riskScore}%`,
-                    backgroundColor: getRiskColor(risk.riskScore)
-                  }}
-                />
+                <div className="risk-score-label" style={{ color: getRiskColor(risk.riskScore) }}>
+                  {getRiskLevel(risk.riskScore)}
+                </div>
+              </div>
+              <div className="risk-info">
+                <div className="risk-path">{risk.path}</div>
+                {!compact && (
+                  <div className="risk-metrics">
+                    <div className="risk-metric">
+                      Errors: <strong>{risk.failureCount}</strong>
+                    </div>
+                    <div className="risk-metric">
+                      Avg: <strong>{Math.round(risk.avgResponseTime)}ms</strong>
+                    </div>
+                    <div className="risk-metric">
+                      Rate: <strong>{risk.errorRate.toFixed(1)}%</strong>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           ))}

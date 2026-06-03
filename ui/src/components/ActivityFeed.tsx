@@ -25,22 +25,36 @@ export const ActivityFeed: React.FC<ActivityFeedProps> = ({ events }) => {
     }
   };
 
+  const formatTime = (timestamp: Date) => {
+    const date = new Date(timestamp);
+    const now = new Date();
+    const diff = now.getTime() - date.getTime();
+    
+    if (diff < 60000) return 'Just now';
+    if (diff < 3600000) return `${Math.floor(diff / 60000)}m ago`;
+    if (diff < 86400000) return `${Math.floor(diff / 3600000)}h ago`;
+    return date.toLocaleDateString();
+  };
+
   return (
-    <div className="card activity-card">
-      <h2>Live Activity Feed</h2>
+    <div className="card">
+      <div className="card-header">
+        <div>
+          <div className="card-title">Activity Feed</div>
+          <div className="card-subtitle">Recent events</div>
+        </div>
+      </div>
       
       {events.length === 0 ? (
-        <p className="no-data">No recent activity</p>
+        <div className="no-data">No recent activity</div>
       ) : (
         <div className="activity-list">
           {events.map((event, idx) => (
-            <div key={idx} className={`activity-item ${getEventClass(event.type)}`}>
+            <div key={`${event.id}-${idx}`} className={`activity-item ${getEventClass(event.type)}`}>
               <span className="activity-icon">{getEventIcon(event.type)}</span>
               <div className="activity-content">
                 <span className="activity-message">{event.message}</span>
-                <span className="activity-time">
-                  {new Date(event.timestamp).toLocaleTimeString()}
-                </span>
+                <span className="activity-time">{formatTime(event.timestamp)}</span>
               </div>
             </div>
           ))}
